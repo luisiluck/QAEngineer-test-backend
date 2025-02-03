@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test:local": "concurrently --kill-others-on-fail --success last 'npm run start' 'npm run wait-and-test:local'",
+    "test:local": "concurrently --kill-others --success last 'npm run start' 'npm run wait-and-test:local'",
     "wait-and-test:local": "node tests/helpers/waitAndTest.js -e local -c backend -d login"
   },
   "keywords": [],
