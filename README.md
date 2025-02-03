@@ -172,3 +172,68 @@ Si tienes preguntas o necesitas ayuda, contacta a tu responsable técnico.
 
 ---
 
+## **8. Pruebas de API**
+Las pruebas de API se realizan a partir de colecciones de Postman utilizando el CLI de Newman.
+El proyecto consta de la siguiente estructura
+
+```
+/QAENGINEER-TEST_BACKEND
+├── /tests
+│   ├── /collections
+│   │   └── backend.json    # colección de endpoints con sus pruebas
+│   ├── /environments
+│   │   └── local.json      # Configuración de entorno
+│   └── /data
+│       └── data.csv        # Datos de entrada para las pruebas
+└── helpers
+        └── waitAndTest.js  # verifica que el servidor este activo en el ambiente seleccionado, antes de ejecutar las pruebas
+```
+
+### Para ejecutar las pruebas:
+1. asegúrate de haber instalado el proyecto
+    ```bash
+    npm install
+    ```
+2. Ejecuta el comando
+    ```bash
+    npm run test:local
+    ```
+    > **Nota**: Este comando se asegura de inicializar una instancia del Servidor para ser testeada.
+
+### Personalización:
+Si deseas utilizar diferentes colecciones, ambientes, o set de datos para las pruebas puedes utilizar el script de ***waitAndTest.js*** con los siguientes parámetros:
+
+| Parámetro                | Opción en Línea de Comando          | Descripción                                                           | Valor Predeterminado  | Ejemplo de Uso                                |
+|-------------------------|-------------------------------------|-----------------------------------------------------------------------|-----------------------|-----------------------------------------------|
+| **Entorno**              | `-e, --environment <type>`         | El entorno del sistema bajo pruebas (por ejemplo: local, dev, prod)  | `local`               | `-e dev`                                      |
+| **Colección**            | `-c, --collection <type>`          | La colección de pruebas que se ejecutará                             | `backend`             | `-c user-tests`                               |
+| **Datos de Prueba**      | `-d, --data <type>`                | Los datos de entrada utilizados en las pruebas                       | `data`                | `-d test-data`                                |
+| **Tiempo de Espera**     | `-w, --wait <number>`              | Tiempo máximo de espera para que el servidor esté listo (miliseg.)   | `15000` (15 segundos) | `-w 30000` (30 segundos)                      |
+| **Intervalo de Reintento** | `-i, --interval <number>`        | Intervalo de tiempo entre cada verificación del servidor (miliseg.)  | `1000` (1 segundo)    | `-i 2000` (2 segundos)                        |
+
+#### Ejemplo de ejecución completo:
+```bash
+node script.js -e local -c backend -d data -w 20000 -i 2000
+```
+
+#### Explicación de los Parámetros
+
+- **`environment`**:  
+  Este parámetro selecciona el entorno en el cual se ejecutarán las pruebas. Se refiere a los archivos de entorno definidos en la ruta `tests/environments/`.  
+  - **Ejemplo:** `-e local` cargará la configuración desde `tests/environments/local.json`.
+
+- **`collection`**:  
+  Especifica la colección de pruebas de **Postman** que se ejecutará. Esta colección debe estar ubicada en la carpeta `tests/collections/`.  
+  - **Ejemplo:** `-c backend` ejecutará la colección `tests/collections/backend.json`.
+
+- **`data`**:  
+  Define el archivo CSV que contiene los datos de entrada para ejecutar pruebas parametrizadas. El archivo debe estar ubicado en `tests/data/`.  
+  - **Ejemplo:** `-d data` usará los datos de `tests/data/data.csv`.
+
+- **`wait`**:  
+  Establece el tiempo máximo que el script esperará a que el servidor esté listo antes de que ocurra un timeout. Este valor está en milisegundos.  
+  - **Ejemplo:** `-w 20000` espera hasta 20 segundos.
+
+- **`interval`**:  
+  Define cuánto tiempo esperar entre cada verificación del estado del servidor. Este valor también está en milisegundos.  
+  - **Ejemplo:** `-i 2000` realizará verificaciones cada 2 segundos.

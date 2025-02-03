@@ -1,0 +1,27 @@
+{
+	"id": "3325162e-afd5-4694-a8f3-12490f244f2a",
+	"name": "express-local",
+	"values": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3001",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "email",
+			"value": "test@example.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "password",
+			"value": "1234",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-02-03T18:50:13.978Z",
+	"_postman_exported_using": "Postman/11.30.4"
+}

@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "83a2349a-8d94-4880-83c3-97f107a2456b",
+		"name": "Youseff",
+		"description": "Collection of endpoints of BackEnd login project\n\n[https://github.com/youfaska/QAEngineer-test-backend](https://github.com/youfaska/QAEngineer-test-backend)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2059058"
+	},
+	"item": [
+		{
+			"name": "{{baseUrl}}/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response",
+							"const body = response.json()",
+							"",
+							"pm.test(\"login\", () =>{",
+							"    response.to.have.status(pm.iterationData.get('status'))",
+							"    pm.expect(body.message).to.eql(pm.iterationData.get('message'))",
+							"    if(body.token){",
+							"        pm.environment.set(\"auth\", `Bearer ${body.token}`)",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}/profile",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response",
+							"const body = response.json()",
+							"",
+							"pm.test('Verify Profile', ()=>{",
+							"    if(pm.environment.get('auth')){",
+							"        response.to.have.status(200)",
+							"        pm.expect(body.name).to.eql(pm.iterationData.get('name'))",
+							"        pm.expect(body.email).to.eql(pm.iterationData.get('email'))",
+							"    }else{",
+							"        response.to.have.status(403)",
+							"        pm.expect(body.message).to.eql('Unauthorized')",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{auth}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/profile",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}/logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.unset(\"auth\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/logout",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

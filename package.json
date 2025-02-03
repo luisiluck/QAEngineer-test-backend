@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "test:local": "concurrently --kill-others 'npm run start' 'npm run wait-and-test:local'",
+    "wait-and-test:local": "node tests/helpers/waitAndTest.js -e local -c backend -d login"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,9 @@
     "express": "^4.21.2"
   },
   "devDependencies": {
+    "commander": "^13.1.0",
+    "concurrently": "^9.1.2",
+    "newman": "^6.2.1",
     "nodemon": "^3.1.9"
   }
 }

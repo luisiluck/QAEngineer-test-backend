@@ -1,0 +1,4 @@
+email,password,status,message,name
+test@example.com,1234,200,Login successful!,John Doe
+wrong,wrong,401,Invalid credentials,
+test@example.com,,401,Invalid credentials,
