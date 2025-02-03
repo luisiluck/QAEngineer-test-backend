@@ -213,7 +213,7 @@ Si deseas utilizar diferentes colecciones, ambientes, o set de datos para las pr
 
 #### Ejemplo de ejecución completo:
 ```bash
-node script.js -e local -c backend -d data -w 20000 -i 2000
+node waitAndTest.js -e local -c backend -d data -w 20000 -i 2000
 ```
 
 #### Explicación de los Parámetros
