@@ -18,7 +18,7 @@
 							"const body = response.json()",
 							"",
 							"pm.test(\"login\", () =>{",
-							"    response.to.have.status(pm.iterationData.get('statu'))",
+							"    response.to.have.status(pm.iterationData.get('status'))",
 							"    pm.expect(body.message).to.eql(pm.iterationData.get('message'))",
 							"    if(body.token){",
 							"        pm.environment.set(\"auth\", `Bearer ${body.token}`)",
